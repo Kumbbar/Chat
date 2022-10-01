@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Вход</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "users/login.css" %}">
+</head>
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form method="post">
+        <h3>Вход</h3>
+        {% csrf_token %}
+        {{ form.username }}
+        {{ form.password }}
+
+        <button type="submit">Войти</button>
+        <a href="{% url "users:register" %}"><button type="button">Регистрация</button></a>
+      {% if form.errors %}
+          <style media="screen">
+              form{
+                  height: 520px;
+              }
+          </style>
+          {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          {% endfor %}
+        {% endif %}
+    </form>
+
+</body>
+</html>
+
+</body>
