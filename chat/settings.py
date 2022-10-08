@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'channels',
+
+    'messages',
     'users',
 ]
 
@@ -138,7 +140,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'users:login'
 
-LOGIN_REDIRECT_URL = 'users:logout'
+LOGIN_REDIRECT_URL = 'messages:index'
 
 # WebSocket configuration
 
