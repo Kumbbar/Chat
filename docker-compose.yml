@@ -3,8 +3,8 @@ version: "3.7"
 services:
   redis:
     image: redis
-    restart: always
     container_name: 'redis'
+    restart: always
     command: redis-server
     ports:
       - '6379:6379'
@@ -12,6 +12,7 @@ services:
   chat:
     build: ./chat
     container_name: 'chat'
+    restart: always
     env_file:
       - chat/.env
     environment:
@@ -26,8 +27,8 @@ services:
     build: ./nginx
     container_name: 'nginx'
     restart: always
-    ports:
-      - "80:80"
     depends_on:
       - chat
+    ports:
+      - "80:80"
 
