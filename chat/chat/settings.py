@@ -139,18 +139,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Login urls
 
 LOGIN_URL = 'users:login'
-
 LOGIN_REDIRECT_URL = 'messages:index'
 
 # WebSocket configuration
+# REDIS_HOST <- docker-compose
 
 ASGI_APPLICATION = "chat.routing.application"
-
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [(os.environ.get('REDIS_HOST'), 6379)],
         },
     },
 }

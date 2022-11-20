@@ -5,7 +5,9 @@ from django.utils.safestring import mark_safe
 
 
 def index(request):
-    """Главная страница"""
+    """
+    Main page
+    """
     return render(request, 'messages/index.html', {})
 
 
