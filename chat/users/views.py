@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .forms import RegistrationForm, LoginForm
 from django.contrib.auth.views import LoginView, LogoutView
-from users import LOGIN_REDIRECT_URL
+from chat.settings import LOGIN_REDIRECT_URL
 
 
 class RegisterUser(CreateView):
