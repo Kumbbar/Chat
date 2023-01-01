@@ -8,3 +8,4 @@ __pycache__/
 enviroments/
 chat/static/
 storage/
+.fleet/
