@@ -21,3 +21,6 @@ urlpatterns = [
     path('', include('messages.urls')),
     path('accounts/', include('users.urls'))
 ]
+
+
+handler404 = "chat.views.page_not_found"
