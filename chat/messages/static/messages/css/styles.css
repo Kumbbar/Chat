@@ -83,7 +83,6 @@ background: #9FDE32;
 display: inline-block;
 font-size: 18px;
 color: #fff;
-background: #A43E89;
 margin-right: 20px;
 width: 220px;
 text-align: center;
@@ -115,14 +114,6 @@ overflow:hidden;
 	color:#fff;
 	background: #A43E89;
 }
-.btn:hover {
-	 color:#fff !important;
-	background:#CA1098;
-}
- a:hover {
-
-	 color:#F443C5 !important;
- }
 .btn{
 display: inline-block;
 padding: 8px 12px;
@@ -168,7 +159,6 @@ padding: 8px 12px;
 	background: rgba(255,255,255,0.35);
 }
 a {
-	color: #A43E89;
 	text-decoration: none;
 	text-shadow: none;
 	-webkit-transition: all 0.2s linear;
@@ -243,6 +233,9 @@ color:#F89F9F;
 	z-index: 50;
 	border-radius: 0;
 	top: 0px;
+	background-color: rgba(255,255,255,0.13);
+	border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
 }
 .addBg {
 	background: rgba(5, 5, 5, 0.94);
@@ -276,7 +269,7 @@ color:#F89F9F;
 	color: #676e73;
 	width: 83%;
 	text-align: center;
-	margin: 23% auto 24px auto;
+	margin: 12% auto 24px auto;
 	font-family: 'Oswald', sans-serif;
 }
 .hero-text p {
@@ -385,7 +378,7 @@ color:#F89F9F;
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
 	color: #fff;
 	background: none;
-	border-bottom: 2px solid #C092AE;
+	border-bottom: 2px solid #f09819;
 	border-radius: 0px;
 }
 .navbar-inverse .navbar-nav > .active {
@@ -422,9 +415,6 @@ color:#F89F9F;
 .darkBg {
 	background: #000;
 }
-.darkBg .fa {
-	color: #A43E89;
-}
 /*--- Banner ----*/
 .banner-container {
 	width: 100%;
@@ -435,7 +425,6 @@ color:#F89F9F;
 	background-size: 100% 100%;
 	background-size: cover;
 	position: relative;
-	border-bottom: 2px #A43E89 solid;
 }
 .banner-container:before {
 position: absolute;
@@ -848,6 +837,7 @@ hr {
 body {
 	margin: 0;
 	font-family: Arial, sans-serif;
+	background-color: #080710;
 }
 #navigation {
 	position: fixed;
@@ -1297,4 +1287,137 @@ nav#filter li {
 }
 .isotopeWrapper article {
 	margin: 0px;
+}
+#mainNav li a.scroll-link{
+	color: white;
+	font-family: sans-serif;
+}
+
+#mainNav li a.scroll-link:hover{
+	color: #f09819;
+}
+
+.shape{
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.shape:first-child{
+    background: linear-gradient(
+        #2b3f28,
+        #f09819
+    );
+    left: -80px;
+    top: -80px;
+}
+.Chat-title{
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 40px;
+	color: #e0e0e0;
+	position: relative;
+}
+.addBlock {
+	width: 20%;
+	height: 80px;
+	border-radius: 10px;
+	justify-content: center;
+	transition: .2s;
+	background-color: rgba(255,255,255,0.13);
+	border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+	float: right;
+	margin: 10% 8% 0 0;
+}
+.infBlock {
+	width: 80%;
+	padding: 30px;
+	height: 120px;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	transition: .2s;
+	background-color: rgba(255,255,255,0.13);
+	border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+}
+.infText {
+	position: relative;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 30px;
+	text-align: center;
+	color: rgba(0,0,0,.8);
+	transition: .2s;
+	margin: 50px 0 0 0;
+}
+
+form{
+	float: right;
+	padding-right: 30px;
+	padding-left: 30px;
+    width: 20%;
+    background-color: rgba(255,255,255,0.13);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+	margin: 12% 8% 0 0;
+}
+form *{
+    font-family: 'Poppins',sans-serif;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+form h3{
+    font-size: 25px;
+    text-align: center;
+	margin-bottom: 0;
+}
+
+label{
+    display: block;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 500;
+}
+input{
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 14px;
+    font-size: 14px;
+    font-weight: 300;
+}
+button{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+select{
+    margin-top: 20px;
+    width: 100%;
+    background-color: #000000;
+    color: white;
+	padding: 15px 20px 15px 15px;
+	font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
 }

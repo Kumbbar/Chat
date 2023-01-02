@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{% static "messages/css/bootstrap.min.css" %}" />
+  <link rel="stylesheet" href="{% static "messages/css/styles.css" %}" />
+  {% block head %}
+  {% endblock %}
+</head>
+<body>
+<div class="background">
+  <div class="shape"></div>
+  <div class="shape"></div>
+</div>
+<header class="header">
+  <div class="container">
+    <nav class="navbar navbar-inverse" role="navigation">
+      <div id="main-nav" class="collapse navbar-collapse left">
+        <ul class="nav navbar-nav" id="mainNav">
+          <li class="active" id="firstLink"><a href="#" class="scroll-link">Чаты</a></li>
+          <li><a href="#services" class="scroll-link">Профиль</a></li>
+          <li><a href="#" class="scroll-link"></a></li>
+          <li><a href="{% url "users:logout" %}" class="scroll-link">Выйти</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+{% block content %}
+{% endblock %}
+</body>
+{% block scripts %}
+{% endblock %}
+</html>

@@ -1,0 +1,47 @@
+{% extends "messages/base.html" %}
+{% load static %}
+<!doctype html>
+<html lang="en-gb" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  {% block head %}
+    <title>Чаты</title>
+  {% endblock %}
+</head>
+
+<body>
+{% block content %}
+  <section id="home">
+    <div class="banner-container">
+
+      <form method="post" action="{% url 'messages:add_chat' %}">
+        <h3>Начать чат</h3>
+        {% csrf_token %}
+        {{ form.interlocutor }}
+
+        <button type="submit">Начать</button>
+      </form>
+      <div class="container banner-content">
+
+        <div class="hero-text animated fadeInDownBig">
+          <div class="infBlock">
+            <p class="infText">{{ request.user.username }}</p>
+            <a href="#" class="btn">Подробнее</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+{% endblock %}
+
+</body>
+{% block scripts %}
+  <script type="text/javascript">
+    var userSocketName = {{ request.user.username }}
+  </script>
+  <script src="{% static "messages/js/index.js" %}"></script>
+{% endblock %}
+
+</html>
