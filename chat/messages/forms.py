@@ -5,13 +5,15 @@ from django.contrib.auth.models import User
 
 
 class ChatAddForm(ModelForm):
-    users = ((user.pk, user.username) for user in User.objects.order_by('username'))
-    interlocutor = forms.CharField(widget=forms.Select(choices=users))
+    users = ((user, user.username) for user in User.objects.order_by('username'))
+    user2 = forms.CharField(widget=forms.Select(choices=users))
 
-    def __init__(self, user, *args):
-        ModelForm.__init__(self)
-        self.user = user
+    def __init__(self, current_username: str = None, *args, **kw):
+        """Must set current_username for POST method"""
+        super().__init__(*args, **kw)
+        if current_username:
+            self.user1 = User.objects.get(username=current_username)
 
     class Meta:
         model = UserChat
-        fields = ('user', 'interlocutor')
+        fields = ('user1', 'user2')

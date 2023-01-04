@@ -18,7 +18,7 @@
       <form method="post" action="{% url 'messages:add_chat' %}">
         <h3>Начать чат</h3>
         {% csrf_token %}
-        {{ form.interlocutor }}
+        {{ form.user2 }}
 
         <button type="submit">Начать</button>
       </form>
