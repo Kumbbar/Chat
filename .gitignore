@@ -9,3 +9,4 @@ enviroments/
 chat/static/
 storage/
 .fleet/
+dump.rdb

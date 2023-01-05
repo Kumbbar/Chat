@@ -11,35 +11,35 @@
 </head>
 
 <body>
+
+{% block header %}
+  <li class="active" id="firstLink"><a href="#" class="scroll-link">Чаты</a></li>
+  <li><a href="{% url "messages:add_chat" %}" class="scroll-link">Начать чат</a></li>
+  <li><a href="#services" class="scroll-link">Профиль</a></li>
+  <li><a href="#" class="scroll-link"></a></li>
+  <li><a href="{% url "users:logout" %}" class="scroll-link">Выйти</a></li>
+{% endblock %}
+
 {% block content %}
   <section id="home">
     <div class="banner-container">
-
-      <form method="post" action="{% url 'messages:add_chat' %}">
-        <h3>Начать чат</h3>
-        {% csrf_token %}
-        {{ form.user2 }}
-
-        <button type="submit">Начать</button>
-      </form>
       <div class="container banner-content">
-
         <div class="hero-text animated fadeInDownBig">
           <div class="infBlock">
             <p class="infText">{{ request.user.username }}</p>
-            <a href="#" class="btn">Подробнее</a>
+            <a href="#" class="btn-chat">Написать</a>
           </div>
         </div>
       </div>
-
     </div>
   </section>
 {% endblock %}
 
 </body>
+
 {% block scripts %}
   <script type="text/javascript">
-    var userSocketName = {{ request.user.username }}
+    var userSocketName = "{{ request.user.username }}"
   </script>
   <script src="{% static "messages/js/index.js" %}"></script>
 {% endblock %}

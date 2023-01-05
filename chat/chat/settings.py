@@ -143,7 +143,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Login urls
 
 LOGIN_URL = 'users:login'
-LOGIN_REDIRECT_URL = 'messages:index'
+LOGIN_REDIRECT_URL = 'messages:chats'
 
 # WebSocket configuration
 # REDIS_HOST <- docker-compose

@@ -1,27 +1,26 @@
-import json
-from .forms import ChatAddForm
 from django.shortcuts import render, redirect
-from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
-from .forms import ChatAddForm
-from django.contrib.auth.models import User
+from channels.http import AsgiRequest
+from .services.chats import UsersChatsService
 
 
 @login_required
-def index(request) -> render:
-    return render(request, 'messages/chats.html', {'form': ChatAddForm()})
+def chats(request: AsgiRequest) -> render:
+    return render(request, 'messages/chats.html')
 
 
 @login_required
-def add_chat(request) -> redirect:
-    if request.method == 'POST':
-        form = ChatAddForm(data=request.POST, current_username=request.user.username)
-        if form.is_valid():
-            pass
-            # print(form.user2)
-    return redirect('messages:index')
+def add_chat(request: AsgiRequest) -> redirect:
+    return render(request, 'messages/add_chat.html')
 
 
 @login_required
-def dialog(request, room_name):
+def add_chat_search(request: AsgiRequest) -> render:
+    username_find = request.GET.get('username') if request.GET.get('username') else ''
+    users = UsersChatsService.get_users_without_chat(request, username_find)
+    return render(request, 'messages/chat_list.html', {'users': users})
+
+
+@login_required
+def dialog(request: AsgiRequest, room_name: str):
     return render(request, 'messages/room.html', {})

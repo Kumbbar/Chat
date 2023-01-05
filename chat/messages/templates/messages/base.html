@@ -5,6 +5,9 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="{% static "messages/css/bootstrap.min.css" %}" />
   <link rel="stylesheet" href="{% static "messages/css/styles.css" %}" />
+  <script src="https://unpkg.com/htmx.org@1.8.4"
+            integrity="sha384-wg5Y/JwF7VxGk4zLsJEcAojRtlVp1FKKdGy1qN+OMtdq72WRvX/EdRdqg/LOhYeV"
+            crossorigin="anonymous"></script>
   {% block head %}
   {% endblock %}
 </head>
@@ -18,10 +21,9 @@
     <nav class="navbar navbar-inverse" role="navigation">
       <div id="main-nav" class="collapse navbar-collapse left">
         <ul class="nav navbar-nav" id="mainNav">
-          <li class="active" id="firstLink"><a href="#" class="scroll-link">Чаты</a></li>
-          <li><a href="#services" class="scroll-link">Профиль</a></li>
-          <li><a href="#" class="scroll-link"></a></li>
-          <li><a href="{% url "users:logout" %}" class="scroll-link">Выйти</a></li>
+            {% block header %}
+            {% endblock %}
+
         </ul>
       </div>
     </nav>

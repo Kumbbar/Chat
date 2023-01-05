@@ -26,4 +26,5 @@ class UserChat(models.Model):
 
     class Meta:
         db_table = 'user_chats'
+        unique_together = ('user1', 'user2')
 

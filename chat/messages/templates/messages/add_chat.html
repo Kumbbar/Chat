@@ -1,0 +1,50 @@
+{% extends "messages/base.html" %}
+{% load static %}
+<!doctype html>
+<html lang="en-gb" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  {% block head %}
+    <title>Добавить чат</title>
+  {% endblock %}
+</head>
+
+<body>
+{% block header %}
+  <li id="firstLink"><a href="{% url "messages:chats" %}" class="scroll-link">Чаты</a></li>
+  <li class="active"><a href="#" class="scroll-link">Начать чат</a></li>
+  <li><a href="#services" class="scroll-link">Профиль</a></li>
+  <li><a href="#" class="scroll-link"></a></li>
+  <li><a href="{% url "users:logout" %}" class="scroll-link">Выйти</a></li>
+{% endblock %}
+{% block content %}
+<section id="home">
+    <div class="banner-container">
+      <div class="container banner-content">
+        <div class="hero-text animated fadeInDownBig">
+          <label class="text-left" for="search-chat-input">Введите имя собеседника для поиска</label>
+          <input type="text"
+            id="search-chat-input"
+            class="form-control"
+            style="max-width: 40%; border-radius: 5px;"
+            placeholder="Имя"
+            name="username"
+            hx-get="{% url 'messages:add_chat_search' %}"
+            hx-trigger="load, keyup changed delay:350ms"
+            hx-target="#search-chats"
+          >
+          <div id="search-chats">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+</body>
+{% block scripts %}
+
+{% endblock %}
+
+</html>

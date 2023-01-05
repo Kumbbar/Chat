@@ -30,7 +30,7 @@ body {
 }
 p {
 	color: #858585;
-	margin: 0 0 1em !important;
+	margin: 0 0 1em;
 }
 h1, h2, h3, h4, h5, h6 {
 	font-family:36px 'Open Sans', sans-serif;
@@ -112,7 +112,7 @@ overflow:hidden;
 }
 .btn {
 	color:#fff;
-	background: #A43E89;
+	background: #101010;
 }
 .btn{
 display: inline-block;
@@ -168,7 +168,6 @@ a {
 	transition: all 0.2s linear;
 }
 a:hover {
-	color: #000;
 	text-decoration: none;
 }
 .btn {
@@ -806,9 +805,7 @@ nav#filter a {
 .page-section.intro {
 	min-height: 600px;
 }
-.btn {
-	font-weight: 200;
-}
+
 .btn-dark {
 	background: #444;
 	color: #fff;
@@ -1337,13 +1334,13 @@ nav#filter li {
 	height: 120px;
 	border-radius: 10px;
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: flex-start;
+	flex-direction: row;
+	justify-content: space-between;
 	transition: .2s;
 	background-color: rgba(255,255,255,0.13);
 	border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
+	margin-bottom: 10px;
 }
 .infText {
 	position: relative;
@@ -1353,7 +1350,8 @@ nav#filter li {
 	text-align: center;
 	color: rgba(0,0,0,.8);
 	transition: .2s;
-	margin: 50px 0 0 0;
+	margin: 0;
+
 }
 
 form{
@@ -1420,4 +1418,23 @@ select{
     font-weight: 600;
     border-radius: 5px;
     cursor: pointer;
+}
+.btn-chat{
+	display: flex;
+	align-items: center;
+	font-size: 20px;
+	font-family: monospace;
+	color: #fff;
+	background: linear-gradient(to left, #f5af19, #f12711, #f5af19);
+	text-decoration: none;
+	padding: 20px 70px;
+	border-radius: 10px;
+	background-size: 200%;
+	transition: .5s;
+}
+
+.btn-chat:hover {
+	text-decoration: none;
+	background-position: right;
+	color: white;
 }
