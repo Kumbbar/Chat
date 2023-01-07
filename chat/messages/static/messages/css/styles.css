@@ -1438,3 +1438,29 @@ select{
 	background-position: right;
 	color: white;
 }
+
+.sendMsgBlock {
+	position: fixed;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	z-index: 50;
+	border-radius: 0;
+	bottom: 0px;
+	background: #f5f2ed;
+}
+
+
+.txtMessage{
+	min-width: 70%;
+	padding-left: 5px;
+	margin: 0;
+}
+
+.btnMessage{
+	border: none;
+	text-align: center;
+	border-radius: 0;
+	min-width: 30%;
+	margin: 0;
+}

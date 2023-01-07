@@ -3,11 +3,11 @@ from django.contrib.auth.models import User
 from django.db.models import QuerySet
 from django.http import HttpResponseBadRequest
 from .exceptions import ChatExistsException
-from ..models import UserChat
+from ..models import UserChat, Message
 from django.db.models import Q
 
 
-class UsersChatsService:
+class UserChatsService:
     @classmethod
     def is_chat_exists(cls, current_user: User, interlocutor: User) -> bool:
         return True if UserChat.objects.filter(
@@ -29,8 +29,8 @@ class UsersChatsService:
                 Q(username=current_user.username) |
                 Q(pk__in=UserChat.objects.filter(user1=current_user).values_list('user2', flat=True)) |
                 Q(pk__in=UserChat.objects.filter(user2=current_user).values_list('user1', flat=True))
-            )
-        return users.order_by('-username')
+            ).order_by('-username')
+        return users
 
     @classmethod
     def create_chat(cls, request: AsgiRequest, username_find: str) -> None:
@@ -40,3 +40,22 @@ class UsersChatsService:
         if cls.is_chat_exists(current_user, interlocutor):
             raise ChatExistsException
         UserChat.objects.create(user1=current_user, user2=interlocutor)
+
+
+class MessageService:
+    @classmethod
+    def create_message_by_usernames(cls, message: str, sender: str, receiver: str) -> None:
+        sender = User.objects.get(username=sender)
+        receiver = User.objects.get(username=receiver)
+        if UserChatsService.is_chat_exists(sender, receiver):
+            Message.objects.create(text=message, user_sender=sender, user_receiver=receiver)
+
+    @classmethod
+    def get_chat_messages(cls, request: AsgiRequest, interlocutor: str) -> QuerySet:
+        current_user = request.user
+        interlocutor = User.objects.get(username=interlocutor)
+        messages = Message.objects.filter(
+            Q(user_sender=current_user, user_receiver=interlocutor) |
+            Q(user_sender=current_user, user_receiver=interlocutor)
+        ).order_by('-created_at')
+        return messages

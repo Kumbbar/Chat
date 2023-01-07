@@ -1,0 +1,55 @@
+{% extends "messages/base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+
+    <title>Чат: {{ interlocutor }}</title>
+    {% endblock %}
+</head>
+
+<body>
+
+{% block header %}
+  <li id="firstLink"><a href="{% url "messages:chats" %}" class="scroll-link">Чаты</a></li>
+  <li><a href="{% url "messages:add_chat_page" %}" class="scroll-link">Начать чат</a></li>
+  <li><a href="#" class="scroll-link">Профиль</a></li>
+  <li><a href="#" class="scroll-link"></a></li>
+  <li><a href="{% url "users:logout" %}" class="scroll-link">Выйти</a></li>
+{% endblock %}
+
+{% block content %}
+    <section id="home">
+      <div class="banner-container">
+        <div class="container banner-content">
+          <div class="hero-text animated fadeInDownBig">
+            {% for message in messages %}
+                {% if message.user_sender == request.user %}
+                  <div class="msgBlockSender">
+                    <p class="msgTextSender">{{ message.text }}</p>
+                  </div>
+                {% else %}
+                  <div class="msgBlockReceiver">
+                    <p class="msgTextReceiver">{{ message.text }}</p>
+                  </div>
+                {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="sendMsgBlock">
+      <input type="text" class="form-control txtMessage" placeholder="Сообщение">
+      <button class="btn-chat btnMessage" id="chat-message-submit">Отправить</button>
+    </div>
+{% endblock %}
+</body>
+{% block scripts %}
+  <script type="text/javascript">
+      var currentUser = "{{ request.user.username }}"
+      var interlocutor = "{{ interlocutor }}"
+    </script>
+  <script src="{% static "messages/js/room.js" %}"></script>
+{% endblock %}
+</html>

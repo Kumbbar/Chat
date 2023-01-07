@@ -1,13 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from channels.http import AsgiRequest
-from .services.chats import UsersChatsService
+from .services.db_logic import UserChatsService, MessageService
 from .services.decorators import except_bad_requests
+
+
+# Chats views
 
 
 @login_required
 def chats(request: AsgiRequest) -> render:
-    user_chats = UsersChatsService.get_user_chats(request)
+    user_chats = UserChatsService.get_user_chats(request)
     return render(request, 'messages/chats.html', {'user_chats': user_chats})
 
 
@@ -19,7 +22,7 @@ def add_chat_page(request: AsgiRequest) -> redirect:
 @login_required
 @except_bad_requests
 def add_chat(request: AsgiRequest, username: str) -> redirect:
-    UsersChatsService.create_chat(request, username)
+    UserChatsService.create_chat(request, username)
     return redirect('messages:chats')
 
 
@@ -27,10 +30,16 @@ def add_chat(request: AsgiRequest, username: str) -> redirect:
 def add_chat_search(request: AsgiRequest) -> render:
     username_find = request.GET.get('username') if request.GET.get('username') else ''
 
-    users = UsersChatsService.get_users_without_chat(request, username_find)
+    users = UserChatsService.get_users_without_chat(request, username_find)
     return render(request, 'messages/chat_list.html', {'users': users})
 
 
+# Room views
+
 @login_required
-def dialog(request: AsgiRequest, room_name: str):
-    return render(request, 'messages/room.html', {})
+def chat_room(request: AsgiRequest, interlocutor: str):
+    messages = MessageService.get_chat_messages(request, interlocutor)
+    return render(
+        request, 'messages/chat_room.html',
+        {'interlocutor': interlocutor, 'messages': messages}
+        )

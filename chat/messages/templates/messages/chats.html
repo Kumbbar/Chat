@@ -28,13 +28,13 @@
           {% for chat in user_chats %}
             {% if chat.user1 == request.user %}
               <div class="infBlock">
-                <p class="infText">{{ chat.user2.username }}</p>
-                <a href="#" class="btn-chat">Написать</a>
+                <p class="infText">{{ chat.user2.username }} | Сообщений: 4</p>
+                <a href="{% url "messages:chat_room" chat.user2.username %}" class="btn-chat">Написать</a>
               </div>
             {% else %}
               <div class="infBlock">
                 <p class="infText">{{ chat.user1.username }}</p>
-                <a href="#" class="btn-chat">Написать</a>
+                <a href="{% url "messages:chat_room" chat.user1.username %}" class="btn-chat">Написать</a>
               </div>
             {% endif %}
           {% endfor %}
@@ -48,9 +48,9 @@
 
 {% block scripts %}
   <script type="text/javascript">
-    var userSocketName = "{{ request.user.username }}"
+    var currentUser = "{{ request.user.username }}"
   </script>
-  <script src="{% static "messages/js/index.js" %}"></script>
+  <script src="{% static "messages/js/chats.js" %}"></script>
 {% endblock %}
 
 </html>
