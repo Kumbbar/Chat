@@ -14,8 +14,8 @@
 
 {% block header %}
   <li class="active" id="firstLink"><a href="#" class="scroll-link">Чаты</a></li>
-  <li><a href="{% url "messages:add_chat" %}" class="scroll-link">Начать чат</a></li>
-  <li><a href="#services" class="scroll-link">Профиль</a></li>
+  <li><a href="{% url "messages:add_chat_page" %}" class="scroll-link">Начать чат</a></li>
+  <li><a href="#" class="scroll-link">Профиль</a></li>
   <li><a href="#" class="scroll-link"></a></li>
   <li><a href="{% url "users:logout" %}" class="scroll-link">Выйти</a></li>
 {% endblock %}
@@ -25,10 +25,19 @@
     <div class="banner-container">
       <div class="container banner-content">
         <div class="hero-text animated fadeInDownBig">
-          <div class="infBlock">
-            <p class="infText">{{ request.user.username }}</p>
-            <a href="#" class="btn-chat">Написать</a>
-          </div>
+          {% for chat in user_chats %}
+            {% if chat.user1 == request.user %}
+              <div class="infBlock">
+                <p class="infText">{{ chat.user2.username }}</p>
+                <a href="#" class="btn-chat">Написать</a>
+              </div>
+            {% else %}
+              <div class="infBlock">
+                <p class="infText">{{ chat.user1.username }}</p>
+                <a href="#" class="btn-chat">Написать</a>
+              </div>
+            {% endif %}
+          {% endfor %}
         </div>
       </div>
     </div>
