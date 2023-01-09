@@ -1,6 +1,10 @@
 var chatSocket = new WebSocket(
     'ws://' + window.location.host + '/ws/chat/' + interlocutor + '/');
 
+window.onload=function(){
+     window.scrollTo(0,document.body.scrollHeight);
+}
+
 chatSocket.onmessage = function(e) {
     var data = JSON.parse(e.data);
     var message = data['message'];
