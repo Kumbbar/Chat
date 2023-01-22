@@ -11,7 +11,12 @@ from .services.decorators import except_bad_requests
 @login_required
 def chats(request: AsgiRequest) -> render:
     user_chats = UserChatsService.get_user_chats(request.user)
-    return render(request, 'messages/chats.html', {'user_chats': user_chats})
+    unread_messages_count = MessageService.get_count_chat_unread_messages(request.user, user_chats)
+    pp = {'afa': 50}
+    return render(
+        request, 'messages/chats.html',
+        {'user_chats': user_chats}
+    )
 
 
 @login_required
@@ -38,7 +43,7 @@ def add_chat_search(request: AsgiRequest) -> render:
 
 @login_required
 def chat_room(request: AsgiRequest, interlocutor: str):
-    messages = MessageService.get_chat_messages(request.user, interlocutor)
+    messages = MessageService.get_and_read_chat_messages(request.user, interlocutor)
     return render(
             request, 'messages/chat_room.html',
             {'interlocutor': interlocutor, 'messages': messages}

@@ -1,3 +1,5 @@
+from typing import List
+
 from channels.http import AsgiRequest
 from django.contrib.auth.models import User
 from django.db.models import QuerySet
@@ -28,6 +30,13 @@ class UserChatsService:
         return chats
 
     @classmethod
+    def get_chat(cls, current_user: User, interlocutor: User):
+        return UserChat.objects.get(
+                Q(user1=current_user, user2=interlocutor) |
+                Q(user2=current_user, user1=interlocutor)
+        )
+
+    @classmethod
     def get_users_without_chat(cls, current_user: User, username_find: str) -> QuerySet:
         users = User.objects.filter(username__icontains=username_find) \
             .exclude(
@@ -56,7 +65,8 @@ class MessageService:
                 text=message,
                 user_sender=sender,
                 user_receiver=receiver,
-                message_status=MessageStatus.objects.get(name=MessageStatusConsts.UNREAD)
+                message_status=MessageStatus.objects.get(name=MessageStatusConsts.UNREAD),
+                chat=UserChatsService.get_chat(sender, receiver)
             )
 
     @classmethod
@@ -69,8 +79,22 @@ class MessageService:
         return messages
 
     @classmethod
-    def get_chat_unread_messages(cls, current_user: User, interlocutor: str) -> QuerySet:
-        messages = cls.get_chat_messages(current_user, interlocutor).filter(
-            message_status=MessageStatus.object.get(name=MessageStatusConsts.UNREAD)
-              ).order_by('-created_at')
+    def get_and_read_chat_messages(cls, current_user: User, interlocutor: str) -> QuerySet:
+        messages = cls.get_chat_messages(current_user, interlocutor)
+        for message in messages:
+            message.message_status = MessageStatus.objects.get(name=MessageStatusConsts.READ)
+        Message.objects.bulk_update(messages, fields=['message_status'])
         return messages
+
+    @classmethod
+    def get_count_chat_unread_messages(cls, current_user: User, user_chats: QuerySet[UserChat]) -> dict:
+        unread_messages_count = {}
+        for chat in user_chats:
+            messages = Message.objects.filter(
+                chat=chat,
+                user_receiver=current_user,
+                message_status=MessageStatus.objects.get(name=MessageStatusConsts.UNREAD)
+            ).order_by('-created_at')
+            if messages:
+                unread_messages_count[str(messages[0].user_sender)] = len(messages)
+        return unread_messages_count
