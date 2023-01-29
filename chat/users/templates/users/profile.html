@@ -1,0 +1,46 @@
+{%  load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/icons8-d-50.png' %}">
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Профиль</title>
+  <link rel="stylesheet" href="{% static "users/css/register.css" %}">
+</head>
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <a href="{% url "messages:chats" %}"><img src="{% static "users/img/icons8-arrow-pointing-left-64.png" %}" alt=""></a>
+    <form method="post">
+        <h3>Профиль</h3>
+        {% csrf_token %}
+        {{ form.first_name }}
+        {{ form.last_name }}
+        {{ form.email }}
+        <button type="submit">Сохранить</button>
+        {% if form.errors %}
+          <style media="screen">
+              form{
+                  height: 580px;
+              }
+          </style>
+          {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          {% endfor %}
+        {% endif %}
+    </form>
+
+</body>
+</html>
+
+</body>
+</html>

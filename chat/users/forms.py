@@ -2,8 +2,11 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth import authenticate, login
+
 from channels.http import AsgiRequest
+
 from .exceptions import LoginAfterRegistrationException
+
 
 class RegistrationForm(UserCreationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Имя'}))
@@ -41,4 +44,14 @@ class LoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ('username', 'password')
+
+
+class ProfileForm(forms.ModelForm):
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Имя'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Фамилия'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Почта'}))
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email')
 

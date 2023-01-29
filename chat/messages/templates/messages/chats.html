@@ -15,8 +15,9 @@
 {% block header %}
   <li class="active" id="firstLink"><a href="#" class="scroll-link">Чаты</a></li>
   <li><a href="{% url "messages:add_chat_page" %}" class="scroll-link">Начать чат</a></li>
-  <li><a href="#" class="scroll-link">Профиль</a></li>
-  <li><a href="#" class="scroll-link"></a></li>
+  <li><a href="{% url "users:profile" %}" class="scroll-link">Профиль</a></li>
+    <li><a href="#" class="scroll-link"></a></li>
+  <li><a href="#" class="scroll-link" style="font-weight: bold !important;">{{ request.user.username }}</a></li>
   <li><a href="{% url "users:logout" %}" class="scroll-link">Выйти</a></li>
 {% endblock %}
 

@@ -1478,7 +1478,7 @@ select{
 }
 .msgTextSender{
 	float: right;
-	text-align: right;
+	text-align: left;
 	background: #F12711FF;
 	padding: 2% !important;
 	border-radius: 10px;

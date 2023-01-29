@@ -1,10 +1,32 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
-from .forms import RegistrationForm, LoginForm
 from django.contrib.auth.views import LoginView, LogoutView
-from chat.settings import LOGIN_REDIRECT_URL
+from django.contrib.auth.models import User
+
+
 from channels.http import AsgiRequest
+
+from .forms import RegistrationForm, LoginForm, ProfileForm
+from chat.settings import LOGIN_REDIRECT_URL
+
+
+class UserProfile(View):
+    def get_user_by_id(self, user_id: int) -> User:
+        return User.objects.get(id=user_id)
+
+    def get(self, request: AsgiRequest):
+        user = self.get_user_by_id(request.user.id)
+        form = ProfileForm(instance=user)
+        return render(request, 'users/profile.html', {'form': form})
+
+    def post(self, request: AsgiRequest):
+        user = self.get_user_by_id(request.user.id)
+        form = ProfileForm(instance=user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(LOGIN_REDIRECT_URL)
+        return render(request, 'users/profile.html', {'form': form})
 
 
 class RegisterUser(View):
@@ -19,7 +41,6 @@ class RegisterUser(View):
             form.login_new_user(request)
             return redirect(LOGIN_REDIRECT_URL)
         return render(request, 'users/register.html', {'form': form})
-
 
 
 class LoginUser(LoginView):
