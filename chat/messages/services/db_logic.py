@@ -81,13 +81,16 @@ class MessageService:
     @classmethod
     def get_and_read_chat_messages(cls, current_user: User, interlocutor: str) -> QuerySet:
         messages = cls.get_chat_messages(current_user, interlocutor)
-        for message in messages:
+        received_messages = messages.filter(user_receiver=current_user)
+        for message in received_messages:
             message.message_status = MessageStatus.objects.get(name=MessageStatusConsts.READ)
-        Message.objects.bulk_update(messages, fields=['message_status'])
+        Message.objects.bulk_update(received_messages, fields=['message_status'])
         return messages
 
     @classmethod
-    def get_count_chat_unread_messages(cls, current_user: User, user_chats: QuerySet[UserChat]) -> dict:
+    def add_attr_count_chat_unread_messages(cls,
+                                            current_user: User,
+                                            user_chats: QuerySet[UserChat]) -> QuerySet[UserChat]:
         unread_messages_count = {}
         for chat in user_chats:
             messages = Message.objects.filter(
@@ -95,6 +98,5 @@ class MessageService:
                 user_receiver=current_user,
                 message_status=MessageStatus.objects.get(name=MessageStatusConsts.UNREAD)
             ).order_by('-created_at')
-            if messages:
-                unread_messages_count[str(messages[0].user_sender)] = len(messages)
-        return unread_messages_count
+            chat.unread_messages_count = len(messages)
+        return user_chats

@@ -1,0 +1,2 @@
+class LoginAfterRegistrationException(Exception):
+    pass

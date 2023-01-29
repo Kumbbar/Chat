@@ -1,14 +1,21 @@
 var chatSocket = new WebSocket(
     'ws://' + window.location.host + '/ws/chat/' + interlocutor + '/');
 
-window.onload=function(){
-     window.scrollTo(0,document.body.scrollHeight);
-}
+var chatSocketGet = new WebSocket(
+    'ws://' + window.location.host + '/ws/chat/' + currentUser + '/');
 
-chatSocket.onmessage = function(e) {
+chatSocketGet.onmessage = function(e) {
     var data = JSON.parse(e.data);
     var message = data['message'];
-    // document.querySelector('#chat-log').value += (message + '\n');
+    console.log('enter')
+    let new_received_message = document.createElement('div');
+    new_received_message.innerHTML = `
+        <div class="msg-block">
+            <p class="msg msgTextReceiver">` + message +
+            `<br><span class="msgTime">только что</span></p>
+        </div>
+    `
+    messages.prepend(new_received_message)
 };
 
 chatSocket.onclose = function(e) {
@@ -17,10 +24,19 @@ chatSocket.onclose = function(e) {
 
 
 document.querySelector('#chat-message-submit').onclick = function(e) {
-    chatSocket.send(JSON.stringify({
-        'message': 'message',
+    if(document.getElementById('inputTxt').value != ''){
+        chatSocket.send(JSON.stringify({
+        'message': document.getElementById('inputTxt').value,
         'sender': currentUser,
         'receiver': interlocutor
     }));
-
+    let new_send_message = document.createElement('div');
+    new_send_message.innerHTML = `
+        <div class="msg-block">
+            <p class="msg msgTextSender">` + document.getElementById('inputTxt').value +
+            `<br><span class="msgTime">только что</span></p>
+        </div>
+    `
+    messages.prepend(new_send_message)
+    }
 };

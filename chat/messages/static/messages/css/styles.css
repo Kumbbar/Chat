@@ -1455,7 +1455,7 @@ select{
 
 .txtMessage{
 	min-width: 70%;
-	padding-left: 5px;
+	padding-left: 20px;
 	margin: 0;
 }
 
@@ -1465,4 +1465,40 @@ select{
 	border-radius: 0;
 	min-width: 30%;
 	margin: 0;
+}
+.msg-block{
+	width: 100%;
+}
+.msg{
+	width: 60%;
+	max-width: 60%;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+	font-size: 19px !important;
+}
+.msgTextSender{
+	float: right;
+	text-align: right;
+	background: #F12711FF;
+	padding: 2% !important;
+	border-radius: 10px;
+}
+.msgTextReceiver{
+	float: left;
+	text-align: left;
+	background: #2B3F28FF;
+	padding: 2% !important;
+	border-radius: 10px;
+
+}
+.msgTime{
+	float: right;
+	font-size: 12px !important;
+}
+.paddingButton{
+	float: left;
+	text-align: left;
+	background: none;
+	padding: 2% !important;
+	border-radius: 10px;
 }

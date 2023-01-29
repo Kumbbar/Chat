@@ -23,24 +23,28 @@
     <section id="home">
       <div class="banner-container">
         <div class="container banner-content">
-          <div class="hero-text animated fadeInDownBig">
+          <div class="hero-text animated fadeInDownBig" id="messages">
             {% for message in messages %}
                 {% if message.user_sender == request.user %}
-                  <div class="msgBlockSender">
-                    <p class="msgTextSender">{{ message.text }}</p>
+                  <div class="msg-block">
+                    <p class="msg msgTextSender">{{ message.text }}<br><span class="msgTime">{{ message.created_at }}</span></p>
                   </div>
                 {% else %}
-                  <div class="msgBlockReceiver">
-                    <p class="msgTextReceiver">{{ message.text }}</p>
+                  <div class="msg-block">
+                    <p class="msg msgTextReceiver">{{ message.text }}<br><span class="msgTime">{{ message.created_at }}</span></p>
                   </div>
                 {% endif %}
             {% endfor %}
+            </div>
+            <div class="msg-block">
+                <p class="msg paddingButton"><br><span class="msgTime"></span></p>
+            </div>
           </div>
         </div>
       </div>
     </section>
     <div class="sendMsgBlock">
-      <input type="text" class="form-control txtMessage" placeholder="Сообщение">
+      <input id="inputTxt" type="text" class="form-control txtMessage" placeholder="Сообщение">
       <button class="btn-chat btnMessage" id="chat-message-submit">Отправить</button>
     </div>
 {% endblock %}

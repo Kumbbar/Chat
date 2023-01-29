@@ -11,8 +11,7 @@ from .services.decorators import except_bad_requests
 @login_required
 def chats(request: AsgiRequest) -> render:
     user_chats = UserChatsService.get_user_chats(request.user)
-    unread_messages_count = MessageService.get_count_chat_unread_messages(request.user, user_chats)
-    pp = {'afa': 50}
+    user_chats = MessageService.add_attr_count_chat_unread_messages(request.user, user_chats)
     return render(
         request, 'messages/chats.html',
         {'user_chats': user_chats}
