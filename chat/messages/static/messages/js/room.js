@@ -7,7 +7,10 @@ var chatSocketGet = new WebSocket(
 chatSocketGet.onmessage = function(e) {
     var data = JSON.parse(e.data);
     var message = data['message'];
-    console.log('enter')
+    var sender = data['sender'];
+
+    if(sender != interlocutor) { return }
+
     let new_received_message = document.createElement('div');
     new_received_message.innerHTML = `
         <div class="msg-block">
