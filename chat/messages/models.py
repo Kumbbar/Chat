@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-
 class UserChat(models.Model):
     user1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user1', null=False)
     user2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user2', null=False)
@@ -29,4 +28,3 @@ class Message(models.Model):
 
     class Meta:
         db_table = 'messages'
-

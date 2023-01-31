@@ -1,6 +1,8 @@
+import json
+
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-import json
+
 from .services.db_logic import MessageService
 
 
@@ -28,7 +30,6 @@ class ChatConsumer(WebsocketConsumer):
         sender = text_data_json['sender']
         receiver = text_data_json['receiver']
         MessageService.create_message_by_usernames(message, sender, receiver)
-
 
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,

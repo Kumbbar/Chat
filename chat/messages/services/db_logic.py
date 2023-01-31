@@ -1,13 +1,11 @@
-from typing import List
-
-from channels.http import AsgiRequest
 from django.contrib.auth.models import User
 from django.db.models import QuerySet
-from django.http import HttpResponseBadRequest
+from django.db.models import Q
+
+from dataclasses import dataclass
+
 from .exceptions import ChatExistsException
 from ..models import UserChat, Message, MessageStatus
-from django.db.models import Q
-from dataclasses import dataclass
 
 
 @dataclass
@@ -91,7 +89,6 @@ class MessageService:
     def add_attr_count_chat_unread_messages(cls,
                                             current_user: User,
                                             user_chats: QuerySet[UserChat]) -> QuerySet[UserChat]:
-        unread_messages_count = {}
         for chat in user_chats:
             messages = Message.objects.filter(
                 chat=chat,

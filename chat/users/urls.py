@@ -1,4 +1,5 @@
 from django.urls import path
+
 from .views import RegisterUser, LoginUser, LogoutUser, UserProfile
 
 app_name = "users"

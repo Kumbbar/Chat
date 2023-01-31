@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+
 from channels.http import AsgiRequest
+
 from .services.db_logic import UserChatsService, MessageService
 from .services.decorators import except_bad_requests
 

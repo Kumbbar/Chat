@@ -1,5 +1,7 @@
-from typing import Callable
 from django.shortcuts import redirect
+
+from typing import Callable
+
 from .exceptions import ChatExistsException
 
 
