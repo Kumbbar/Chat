@@ -17,3 +17,11 @@ sudo docker-compose up
 <image height="300" src="https://user-images.githubusercontent.com/90816195/215807426-79c27390-a898-4861-b285-3ccc8fc956ba.png"/>
 
 ## If static files chanched
+```
+cd chat
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+python3 manage.py collectstatic
+cp static ../nginx
+```
