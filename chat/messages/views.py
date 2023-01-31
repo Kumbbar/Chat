@@ -5,7 +5,7 @@ from channels.http import AsgiRequest
 
 from .services.db_logic import UserChatsService, MessageService
 from .services.decorators import except_bad_requests
-
+from .filters import *
 
 # Chats views
 

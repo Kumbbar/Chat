@@ -28,11 +28,11 @@
             {% for message in messages %}
                 {% if message.user_sender == request.user %}
                   <div class="msg-block">
-                    <p class="msg msgTextSender">{{ message.text }}<br><span class="msgTime">{{ message.created_at }}</span></p>
+                    <p class="msg msgTextSender">{{ message.text }}<br><span class="msgTime">{{ message.created_at | format_date }}</span></p>
                   </div>
                 {% else %}
                   <div class="msg-block">
-                    <p class="msg msgTextReceiver">{{ message.text }}<br><span class="msgTime">{{ message.created_at }}</span></p>
+                    <p class="msg msgTextReceiver">{{ message.text }}<br><span class="msgTime">{{ message.created_at | format_date }}</span></p>
                   </div>
                 {% endif %}
             {% endfor %}
