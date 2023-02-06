@@ -90,10 +90,10 @@ class MessageService:
                                             current_user: User,
                                             user_chats: QuerySet[UserChat]) -> QuerySet[UserChat]:
         for chat in user_chats:
-            messages = Message.objects.filter(
+            messages = Message.objects.select_related('message_status').filter(
                 chat=chat,
                 user_receiver=current_user,
-                message_status=MessageStatus.objects.get(name=MessageStatusConsts.UNREAD)
+                message_status__name=MessageStatusConsts.UNREAD
             ).order_by('-created_at')
             chat.unread_messages_count = len(messages)
         return user_chats
