@@ -1,6 +1,8 @@
 {% for user in users %}
-  <div class="infBlock">
-    <p class="infText">{{ user.username }}</p>
-    <a href="{% url "messages:add_chat" user.username %}" class="btn-chat">Начать</a>
-  </div>
+  {% if user.username %}
+    <div class="infBlock">
+      <p class="infText">{{ user.username }}</p>
+      <a href="{% url "messages:add_chat" user.username %}" class="btn-chat">Начать</a>
+    </div>
+  {% endif %}
 {% endfor %}

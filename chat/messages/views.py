@@ -13,7 +13,6 @@ from .filters import *
 @login_required
 def chats(request: AsgiRequest) -> render:
     user_chats = UserChatsService.get_user_chats(request.user)
-    user_chats = MessageService.add_attr_count_chat_unread_messages(request.user, user_chats)
     return render(
         request, 'messages/chats.html',
         {'user_chats': user_chats}

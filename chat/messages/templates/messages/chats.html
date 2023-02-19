@@ -27,17 +27,10 @@
       <div class="container banner-content">
         <div class="hero-text animated fadeInDownBig">
           {% for chat in user_chats %}
-            {% if chat.user1 == request.user %}
               <div class="infBlock">
-                <p class="infText">{{ chat.user2.username }} | Сообщений: <span id="{{ chat.user2.username }}">{{ chat.unread_messages_count }}</span></p>
-                <a id="{{ chat.user2.username }}-btn" href="{% url "messages:chat_room" chat.user2.username %}" class="btn-chat">Написать</a>
+                <p class="infText">{{ chat.interlocutor }} | Сообщений: <span id="{{ chat.interlocutor }}">{{ chat.unread_messages }}</span></p>
+                <a id="{{ chat.interlocutor }}-btn" href="{% url "messages:chat_room" chat.interlocutor %}" class="btn-chat">Написать</a>
               </div>
-            {% else %}
-              <div class="infBlock">
-                <p class="infText">{{ chat.user1.username }} | Сообщений: <span id="{{ chat.user1.username }}">{{ chat.unread_messages_count }}</span></p>
-                <a id="{{ chat.user1.username }}-btn" href="{% url "messages:chat_room" chat.user1.username %}" class="btn-chat">Написать</a>
-              </div>
-            {% endif %}
           {% endfor %}
         </div>
       </div>

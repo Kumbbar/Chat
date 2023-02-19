@@ -24,7 +24,28 @@ class UserChatsService:
 
     @classmethod
     def get_user_chats(cls, user: User) -> QuerySet:
-        chats = UserChat.objects.filter(Q(user1=user) | Q(user2=user))
+        chats = UserChat.objects.raw(
+            '''
+                SELECT 
+                user_chats.id as id, 
+                CASE 
+                    WHEN user_chats.user1_id = %(current_user)s THEN auth_user2.username
+                    WHEN user_chats.user2_id = %(current_user)s THEN auth_user1.username
+                END as interlocutor,
+                (
+                    SELECT COUNT(*)
+                    FROM messages 
+                    JOIN message_statuses ON messages.message_status_id = message_statuses.id
+                    WHERE messages.chat_id = user_chats.id
+                    AND message_statuses.name = '%(unread_status)s'
+                ) as unread_messages
+                FROM user_chats 
+                JOIN auth_user auth_user1 ON user_chats.user1_id = auth_user1.id
+                JOIN auth_user auth_user2 ON user_chats.user2_id = auth_user2.id
+                WHERE user_chats.user1_id = %(current_user)s
+                OR user_chats.user2_id = %(current_user)s
+            ''' % {'current_user': user.pk, 'unread_status': MessageStatusConsts.UNREAD}
+        )
         return chats
 
     @classmethod
@@ -35,7 +56,7 @@ class UserChatsService:
         )
 
     @classmethod
-    def get_users_without_chat(cls, current_user: User, username_find: str) -> QuerySet:
+    def get_users_without_chat(cls, current_user: User, username_find: str) -> QuerySet[User]:
         users = User.objects.filter(username__icontains=username_find) \
             .exclude(
             Q(username=current_user.username) |
@@ -69,10 +90,9 @@ class MessageService:
 
     @classmethod
     def get_chat_messages(cls, current_user: User, interlocutor: str) -> QuerySet:
-        interlocutor = User.objects.get(username=interlocutor)
-        messages = Message.objects.filter(
-            Q(user_sender=current_user, user_receiver=interlocutor) |
-            Q(user_sender=interlocutor, user_receiver=current_user)
+        messages = Message.objects.select_related('user_sender', 'user_receiver').filter(
+            Q(user_sender=current_user, user_receiver__username=interlocutor) |
+            Q(user_sender__username=interlocutor, user_receiver=current_user)
         ).order_by('-created_at')
         return messages
 
@@ -80,20 +100,9 @@ class MessageService:
     def get_and_read_chat_messages(cls, current_user: User, interlocutor: str) -> QuerySet:
         messages = cls.get_chat_messages(current_user, interlocutor)
         received_messages = messages.filter(user_receiver=current_user)
+        read_status = MessageStatus.objects.get(name=MessageStatusConsts.READ)
+
         for message in received_messages:
-            message.message_status = MessageStatus.objects.get(name=MessageStatusConsts.READ)
+            message.message_status = read_status
         Message.objects.bulk_update(received_messages, fields=['message_status'])
         return messages
-
-    @classmethod
-    def add_attr_count_chat_unread_messages(cls,
-                                            current_user: User,
-                                            user_chats: QuerySet[UserChat]) -> QuerySet[UserChat]:
-        for chat in user_chats:
-            messages = Message.objects.select_related('message_status').filter(
-                chat=chat,
-                user_receiver=current_user,
-                message_status__name=MessageStatusConsts.UNREAD
-            ).order_by('-created_at')
-            chat.unread_messages_count = len(messages)
-        return user_chats
