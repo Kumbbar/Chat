@@ -6,10 +6,11 @@ from django.contrib.auth import authenticate, login
 from channels.http import AsgiRequest
 
 from .exceptions import LoginAfterRegistrationException
+from .validators import check_space
 
 
 class RegistrationForm(UserCreationForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Имя'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Имя'}), validators=[check_space])
     email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Почта'}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Повторите пароль'}))
