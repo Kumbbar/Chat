@@ -7,7 +7,7 @@ services:
     restart: always
     command: redis-server
     ports:
-      - '6379:6379'
+      - '6379'
 
   chat:
     build: ./chat
@@ -21,7 +21,7 @@ services:
     depends_on:
       - redis
     ports:
-      - '8000:8000'
+      - '8000'
 
   nginx:
     build: ./nginx
