@@ -9,6 +9,7 @@ cd  chat
 cp .env.sample .env
 - Database and Debug
 - vim chat/settings.py
+cd ..
 sudo docker-compose up
 ```
 
