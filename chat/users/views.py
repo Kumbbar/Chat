@@ -12,16 +12,13 @@ from chat.settings import LOGIN_REDIRECT_URL
 
 
 class UserProfile(View):
-    def get_user_by_id(self, user_id: int) -> User:
-        return User.objects.get(id=user_id)
-
     def get(self, request: AsgiRequest):
-        user = self.get_user_by_id(request.user.id)
+        user = request.user
         form = ProfileForm(instance=user)
         return render(request, 'users/profile.html', {'form': form})
 
     def post(self, request: AsgiRequest):
-        user = self.get_user_by_id(request.user.id)
+        user = request.user
         form = ProfileForm(instance=user, data=request.POST)
         if form.is_valid():
             form.save()
