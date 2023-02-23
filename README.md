@@ -5,7 +5,7 @@
 ```
 git clone https://github.com/Kumbbar/Chat
 cd Chat
-cd  chat
+cd chat
 cp .env.sample .env
 - Database and Debug
 - vim chat/settings.py
