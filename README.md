@@ -11,6 +11,8 @@ cp .env.sample .env
 - vim chat/settings.py
 cd ..
 sudo docker-compose up
+-- create superuser
+-- add message statuses in admin panel
 ```
 
 ## Visual
