@@ -13,6 +13,7 @@ cd ..
 sudo docker-compose up
 -- create superuser
 -- add message statuses in admin panel
+-- edit MessageStatusConsts in db_logic.py
 ```
 
 ## Visual
