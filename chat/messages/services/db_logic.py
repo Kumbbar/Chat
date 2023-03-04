@@ -24,6 +24,7 @@ class UserChatsService:
 
     @classmethod
     def get_user_chats(cls, user: User) -> QuerySet:
+        # No user input
         chats = UserChat.objects.raw(
             '''
                 SELECT 
@@ -37,6 +38,7 @@ class UserChatsService:
                     FROM messages 
                     JOIN message_statuses ON messages.message_status_id = message_statuses.id
                     WHERE messages.chat_id = user_chats.id
+                    AND messages.user_receiver_id = %(current_user)s
                     AND message_statuses.name = '%(unread_status)s'
                 ) as unread_messages
                 FROM user_chats 
